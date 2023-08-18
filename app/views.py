@@ -1,17 +1,24 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from . forms import SignUpForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from . forms import RegisterForm, LoginForm
+from django.contrib.auth import views as auth_views
+from django.views import generic
+from django.urls import reverse_lazy
 
 def foo(request):
-    return HttpResponse('Hellow World')
+    return render(request, 'app/index.html')
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse('Welcome a new user')
-    else:
-        form = SignUpForm()
-        return render(request, 'auth/signup.html', {'form': form})
+class LoginView(auth_views.LoginView):
 
+    form_class = LoginForm
+    template_name = 'auth/login.html'
+
+class RegisterForm(generic.CreateView):
+
+    form_class = RegisterForm
+    template_name = 'auth/signup.html' 
+    success_url = reverse_lazy('login')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/app/login')
