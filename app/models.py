@@ -1,22 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
-# Create your models here.
+
+from datetime import datetime
+
+from django.conf import settings
+
+from pathlib import Path
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
+
+
+def validator_file(file):
+    # if Path(file).suffix != '.py':
+    if os.path.splitext(file)[1] != '.py':
+        raise ValidationError(
+            'Exestion of a file should be with < .py >'
+        )
 
 class CustomUser(AbstractUser):
 
     username = None
-    '''    
-    username = models.CharField(
-        _('username'),
-        max_length=150,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[AbstractUser.username_validator],
-        error_messages={'unique': _('User with this username already exists')},
-        null=True,
-        blank=True,
-    )
-    '''
 
     email = models.EmailField(
         _('email adress'), 
@@ -35,7 +39,21 @@ class CustomUser(AbstractUser):
         )
     )
 
-
     USERNAME_FIELD = "email"
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+def upload_path(instance, filename):
+    return f'{instance.user}/{filename}'
+
+class UserFile(models.Model):
+
+    # title = models.CharField(max_length=200, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    file = models.FileField(upload_to=upload_path, validators=[FileExtensionValidator(allowed_extensions=['py'])], null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
+    def __str__(self) -> str:
+        return str(self.file)
+
