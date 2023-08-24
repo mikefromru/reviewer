@@ -1,16 +1,14 @@
 <html>
     <body>
 <h1>Edit this file</h1>
-<form action="">
-    {{ form }}
-</form>
 
-{{ form }}
-
-<textarea name="" id="" cols="30" rows="10">
+<form method="POST" action="{% url 'file-edit' pk %}">
+    {% csrf_token %}
+    <textarea name="new" id="" cols="30" rows="10">
 {{ file_content }}
-</textarea>
-
+    </textarea>
+    <button type="submit">send</button>
+</form>
 
 </body>
 </html>

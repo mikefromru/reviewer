@@ -18,20 +18,19 @@ from django.views import View
 def edit_file(request, pk):
 
     queryset = UserFile.objects.get(pk=pk)
-    # '''
     with open('media/' + str(queryset), 'r') as f:
-        # file_content = f.read()
         file_content = f.read()
-    # '''
 
-    # form = EditFileForm('file_content kekekeklsek kekekekek')
-    # return render(request, 'app/file-edit.html', {'form': form})
+    if request.method == 'GET':
+        return render(request, 'app/file-edit.html', {'file_content': file_content, 'pk': pk})
 
-    return render(request, 'app/file-edit.html', {'file_content': file_content})
-    # return render(request, 'app/file-edit.html', {'file_content': file_content}, content_type='text/plain')
-    # return HttpResponse(file_content, content_type='text/plain')
+    if request.method == 'POST':
+        with open('media/' + str(queryset), 'w') as f:
+            update_file = request.POST['new']
+            f.write(update_file)
 
-
+        return redirect('file-list')
+        # return HttpResponse(file, content_type='text/plain')
 
 # class FileEditView(generic.UpdateView):
 class FileEditView(View):
