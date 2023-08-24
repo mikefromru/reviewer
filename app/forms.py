@@ -7,6 +7,18 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+from . models import UserFile
+
+class EditFileForm(forms.Form):
+
+    # file = forms.CharField(widget=forms.Textarea)
+    file = forms.Textarea()
+    # file = forms.FileField()
+
+    # class Meta:
+        # model = UserFile
+        # fields = ('id', 'file')
+
 class LoginForm(AuthenticationForm):
     ...
 

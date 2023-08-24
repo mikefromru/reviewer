@@ -53,6 +53,7 @@ class UserFile(models.Model):
     file = models.FileField(upload_to=upload_path, validators=[FileExtensionValidator(allowed_extensions=['py'])], null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
     modified = models.DateTimeField(auto_now=True, blank=True)
+    changed = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return str(self.file)

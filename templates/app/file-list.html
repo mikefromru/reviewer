@@ -8,6 +8,13 @@
 </head>
 <body>
     <h1>Welcome {{ request.user }}</h1> 
-    <a href="{% url 'logout' %}">Logout</button>
+    <a href="{% url 'logout' %}">Logout</a>
+    <ul>
+    {% for x in object_list %}
+        <li><a href="{% url 'file-detail' x.pk %}">{{ x }}</a></li>
+    {% empty %}
+        <li>No files yet.</li>
+    {% endfor %}
+    </ul>
 </body>
 </html>

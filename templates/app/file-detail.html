@@ -1,0 +1,14 @@
+<h1>Hello File detail</h1>
+<p>{{ object.file }}</p>
+<p>{{ object.created }}</p>
+<p>{{ object.modified }}</p>
+<p>{{ object.changed }}</p>
+
+<a href="{% url 'file-edit' object.pk %}">Edit</a>
+<br />
+<br />
+
+<form method="POST" action="{% url 'file-delete' object.pk %}">
+    {% csrf_token %}
+    <button type="submit">DELETE</button>
+</form>
