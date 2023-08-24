@@ -9,14 +9,13 @@ User = get_user_model()
 
 from . models import UserFile
 
-class EditFileForm(forms.Form):
+class UploadFileForm(forms.Form):
 
-    # file = forms.CharField(widget=forms.Textarea)
-    file = forms.Textarea()
-    # file = forms.FileField()
+    file = forms.FileField()
 
-    # class Meta:
-        # model = UserFile
+    class Meta:
+        model = UserFile
+        fields = '__all__'
         # fields = ('id', 'file')
 
 class LoginForm(AuthenticationForm):

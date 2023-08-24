@@ -1,0 +1,8 @@
+<h1>Upload File</h1>
+
+<form method='POST' action="{% url 'file-upload' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- {{ form }} -->
+    <input name='new-file' type="file">
+    <button type="submit">SEND</button>
+</form>

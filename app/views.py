@@ -9,14 +9,13 @@ from django.contrib.auth.views import LogoutView
 from django.views import generic
 from django.urls import reverse_lazy
 from . models import UserFile
-from . forms import EditFileForm
+from . forms import UploadFileForm
 from django.http import HttpResponse
 from django.views import View
 
 
 
 def edit_file(request, pk):
-
     queryset = UserFile.objects.get(pk=pk)
     with open('media/' + str(queryset), 'r') as f:
         file_content = f.read()
@@ -32,24 +31,38 @@ def edit_file(request, pk):
         return redirect('file-list')
         # return HttpResponse(file, content_type='text/plain')
 
-# class FileEditView(generic.UpdateView):
-class FileEditView(View):
+class UploadFileView(View):
 
+    form_class = UploadFileForm
+    template_name = 'app/file-upload.html'
+    # success_url = reverse_lazy
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid:
+            new_file = UserFile(file=request.FILES['new-file'])
+            new_file.user = request.user
+            new_file.save()
+            return redirect('file-list')
+        else:
+            return HttpResponse('Something went wrong !')
+
+# class FileEditView(generic.UpdateView):
+# class FileEditView(View):
     # model = UserFile
     # form_class = EditFileForm
     # success_url = reverse_lazy('file-list')
     # template_name = 'app/file-edit.html'
-
     # fields = ['file']
-
     # def get_queryset(self):
         # return self.model.objects.filter(user=self.request.user)
-
-    def get(self, request, pk):
-        form = EditFileForm()
-        return render(request, 'app/file-edit.html', {'form': form})
-
-
+    # def get(self, request, pk):
+    #     form = EditFileForm()
+    #     return render(request, 'app/file-edit.html', {'form': form})
 
 
 class FileListView(generic.ListView):
