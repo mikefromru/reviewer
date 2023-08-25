@@ -8,16 +8,23 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from . models import UserFile
+from django.core.validators import FileExtensionValidator
 
-class UploadFileForm(forms.Form):
+class UploadFileForm(forms.ModelForm):
 
-    file = forms.FileField()
 
     class Meta:
         model = UserFile
-        fields = '__all__'
-        # fields = ('id', 'file')
+        # fields = '__all__'
+        fields = ('id', 'file')
 
+
+        
+        # widgets = {
+            # 'your_file_attribute': FileInput(attrs={'html_attribute': value}),
+        # }
+
+    # file = forms.FileField(upload_to=upload_path, validators=[FileExtensionValidator(allowed_extensions=['py'])])
 class LoginForm(AuthenticationForm):
     ...
 

@@ -31,6 +31,8 @@ def edit_file(request, pk):
         return redirect('file-list')
         # return HttpResponse(file, content_type='text/plain')
 
+
+
 class UploadFileView(View):
 
     form_class = UploadFileForm
@@ -43,13 +45,20 @@ class UploadFileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
+        print('---------')
+        print(request.FILES)
+        print('---------')
         if form.is_valid:
-            new_file = UserFile(file=request.FILES['new-file'])
+            # new_file = UserFile(file=request.FILES['new-file'])
+            new_file = UserFile(file=request.FILES['file'])
             new_file.user = request.user
             new_file.save()
             return redirect('file-list')
         else:
             return HttpResponse('Something went wrong !')
+
+
+
 
 # class FileEditView(generic.UpdateView):
 # class FileEditView(View):

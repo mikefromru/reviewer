@@ -56,5 +56,6 @@ class UserFile(models.Model):
     changed = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return str(self.file)
+        # return str(self.file)
+        return str(self.file).split('/')[-1]
 
