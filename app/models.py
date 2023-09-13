@@ -9,6 +9,7 @@ from django.conf import settings
 from pathlib import Path
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
+import os
 
 
 def validator_file(file):
@@ -20,7 +21,7 @@ def validator_file(file):
 
 class CustomUser(AbstractUser):
 
-    username = None
+    username = models.CharField(max_length=50, blank=True, null=True, unique=True)
 
     email = models.EmailField(
         _('email adress'), 
@@ -39,7 +40,7 @@ class CustomUser(AbstractUser):
         )
     )
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -48,7 +49,6 @@ def upload_path(instance, filename):
 
 class UserFile(models.Model):
 
-    # title = models.CharField(max_length=200, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     file = models.FileField(upload_to=upload_path, validators=[FileExtensionValidator(allowed_extensions=['py'])], null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
@@ -56,6 +56,4 @@ class UserFile(models.Model):
     changed = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        # return str(self.file)
         return str(self.file).split('/')[-1]
-

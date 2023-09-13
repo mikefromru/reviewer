@@ -1,6 +1,10 @@
 from django import forms
 from django.core import validators
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    AuthenticationForm,
+)
 
 from django.contrib.auth import authenticate, login
 
@@ -12,19 +16,10 @@ from django.core.validators import FileExtensionValidator
 
 class UploadFileForm(forms.ModelForm):
 
-
     class Meta:
         model = UserFile
-        # fields = '__all__'
         fields = ('id', 'file')
-
-
         
-        # widgets = {
-            # 'your_file_attribute': FileInput(attrs={'html_attribute': value}),
-        # }
-
-    # file = forms.FileField(upload_to=upload_path, validators=[FileExtensionValidator(allowed_extensions=['py'])])
 class LoginForm(AuthenticationForm):
     ...
 
@@ -35,4 +30,3 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
-
