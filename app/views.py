@@ -13,7 +13,7 @@ from . forms import UploadFileForm
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def edit_file(request, pk):
@@ -32,8 +32,6 @@ def edit_file(request, pk):
         return redirect('file-list')
         # return HttpResponse(file, content_type='text/plain')
 
-
-
 class UploadFileView(View):
 
     form_class = UploadFileForm
@@ -46,11 +44,8 @@ class UploadFileView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
-        print('---------')
         print(request.FILES)
-        print('---------')
         if form.is_valid:
-            # new_file = UserFile(file=request.FILES['new-file'])
             new_file = UserFile(file=request.FILES['file'])
             new_file.user = request.user
             new_file.save()
@@ -60,29 +55,11 @@ class UploadFileView(View):
 
 
 
-
-# class FileEditView(generic.UpdateView):
-# class FileEditView(View):
-    # model = UserFile
-    # form_class = EditFileForm
-    # success_url = reverse_lazy('file-list')
-    # template_name = 'app/file-edit.html'
-    # fields = ['file']
-    # def get_queryset(self):
-        # return self.model.objects.filter(user=self.request.user)
-    # def get(self, request, pk):
-    #     form = EditFileForm()
-    #     return render(request, 'app/file-edit.html', {'form': form})
-
-# from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 class FileListView(LoginRequiredMixin, generic.ListView):
     
     model = UserFile
     template_name = 'app/file-list.html'
     
-    # @method_decorator(login_required(login_url='/app/login/'))
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
 
@@ -127,4 +104,5 @@ class RegisterForm(generic.CreateView):
         return super(RegisterForm, self).form_valid(form)
 
 class UserLogoutView(LogoutView):
+
     next_page = reverse_lazy('login') 

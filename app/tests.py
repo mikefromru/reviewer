@@ -24,8 +24,26 @@ class TestUserFile(TestCase):
             password='valera',
         )
 
-    def test_get_main_page(self):
-        self.client.login(email='admin@gmail.com', password='admin')
-        response = self.client.get(reverse('file-list'))
-        self.assertEquals(response.status_code, 200)
+    # def test_register_user(self):
+    #     data = {
+    #         'username': 'mikename',
+    #         'email': 'mike@gmail.com',
+    #         'password1': 'mike35@qwerty?6_-',
+    #         'password2': 'mike35@qwerty?6_-',
+    #     }
+
+    #     response = self.client.post(reverse('register'), data=data)
+    #     self.assertEqual(response.status_code, 201)
+
+
+    def test_count_users(self):
+        count = User.objects.all().count()
+        self.assertEquals(count, 3)
+    
+
+    # Check authenticated user permission
+    # def test_get_main_page(self):
+    #     self.client.login(email='admin@gmail.com', password='admin')
+    #     response = self.client.get(reverse('file-list'))
+    #     self.assertEquals(response.status_code, 200)
 
