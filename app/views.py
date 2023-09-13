@@ -12,6 +12,7 @@ from . models import UserFile
 from . forms import UploadFileForm
 from django.http import HttpResponse
 from django.views import View
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -73,12 +74,15 @@ class UploadFileView(View):
     #     form = EditFileForm()
     #     return render(request, 'app/file-edit.html', {'form': form})
 
+# from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class FileListView(generic.ListView):
+class FileListView(LoginRequiredMixin, generic.ListView):
     
     model = UserFile
     template_name = 'app/file-list.html'
-
+    
+    # @method_decorator(login_required(login_url='/app/login/'))
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
 
