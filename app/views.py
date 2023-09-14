@@ -18,14 +18,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 def edit_file(request, pk):
     queryset = UserFile.objects.get(pk=pk)
-    with open('media/' + str(queryset), 'r') as f:
+    with open('media/'+ str(request.user) + '/'  + str(queryset), 'r') as f:
         file_content = f.read()
 
     if request.method == 'GET':
         return render(request, 'app/file-edit.html', {'file_content': file_content, 'pk': pk})
 
     if request.method == 'POST':
-        with open('media/' + str(queryset), 'w') as f:
+        with open('media/'+ str(request.user) + '/'  + str(queryset), 'w') as f:
             update_file = request.POST['new']
             f.write(update_file)
 
@@ -52,8 +52,6 @@ class UploadFileView(View):
             return redirect('file-list')
         else:
             return HttpResponse('Something went wrong !')
-
-
 
 class FileListView(LoginRequiredMixin, generic.ListView):
     
