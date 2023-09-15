@@ -4,25 +4,5 @@
 <form name='newfile' method='POST' action="{% url 'file-upload' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <!-- <input type='submit' value="new-file"> -->
     <button type="submit">SEND</button>
-    {% for field in form %}
-        {{ field.errors }}
-    {% endfor %}
-
-    {{ form.errors }}
-
-    {% if error_messages %}
-        <p>Fuck yuie bitch</p>
-    {% endif %}
-
-    {% if form.errors %}
-    <div class="alert alert-danger">
-        Please be careful
-        {{ form.non_field_errors }}
-    </div>
-    {% endif %}
-
-
-
 </form>

@@ -24,6 +24,8 @@ def validate_file_extension(value):
 
 class UploadFileForm(forms.ModelForm):
 
+    file = forms.FileField(required=True)
+
     class Meta:
         model = UserFile
         fields = ('id', 'file')
