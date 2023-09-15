@@ -32,26 +32,18 @@ def edit_file(request, pk):
         return redirect('file-list')
         # return HttpResponse(file, content_type='text/plain')
 
-class UploadFileView(View):
-
-    form_class = UploadFileForm
-    template_name = 'app/file-upload.html'
-    # success_url = reverse_lazy
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, request.FILES)
+def upload_file(request):
+    if request.POST:
+        form = UploadFileForm(request.POST, request.FILES)
         print(request.FILES)
-        if form.is_valid:
+        if form.is_valid():
             new_file = UserFile(file=request.FILES['file'])
             new_file.user = request.user
             new_file.save()
             return redirect('file-list')
-        else:
-            return HttpResponse('Something went wrong !')
+    else:
+        form = UploadFileForm()
+    return render(request, 'app/file-upload.html', {'form': form})
 
 class FileListView(LoginRequiredMixin, generic.ListView):
     

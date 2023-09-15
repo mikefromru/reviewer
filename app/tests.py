@@ -27,4 +27,10 @@ class TestUserFile(TestCase):
     def test_count_users(self):
         count = User.objects.all().count()
         self.assertEquals(count, 2)
-    
+
+    # Check authenticated user permission
+    def test_get_main_page(self):
+        self.client.login(email='admin@gmail.com', password='admin')
+        response = self.client.get(reverse('file-list'))
+        self.assertEquals(response.status_code, 200)
+
