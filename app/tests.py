@@ -20,23 +20,23 @@ class TestUserFile(TestCase):
             password='admin',
         )
 
-        # self.user_2 = User.objects.create_user(
-        #     id=2,
-        #     username='valera',
-        #     email='valera@gmail.com',
-        #     password='valera',
-        # )
+        self.user_2 = User.objects.create_user(
+            id=2,
+            username='valera',
+            email='valera@gmail.com',
+            password='valera',
+        )
 
         self.client.login(email='admin@gmail.com', password='admin')
 
-    # def test_count_users(self):
-    #     count = User.objects.all().count()
-    #     self.assertEquals(count, 2)
+    def test_count_users(self):
+        count = User.objects.all().count()
+        self.assertEquals(count, 2)
 
-    # # Check authenticated user permission
-    # def test_get_main_page(self):
-    #     response = self.client.get(reverse('file-list'))
-    #     self.assertEquals(response.status_code, 200)
+    # Check authenticated user permission
+    def test_get_main_page(self):
+        response = self.client.get(reverse('file-list'))
+        self.assertEquals(response.status_code, 200)
 
 
 
