@@ -45,8 +45,9 @@ class TestUserFile(TestCase):
     # def test_form_upload_file(self):
     #     form = UploadFileForm(data={
     #         'file': 
-    #     })
 
+    #     })
+    
     def test_upload_file(self):
         # filename_py = 'test_files/test_upload_file.py' 
         # file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/plain')
@@ -75,10 +76,9 @@ class TestUserFile(TestCase):
     #    response = self.client.post(reverse('file-upload'), data=data)
     #    file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/x-py')
     #    response = self.client.post(reverse('file-upload'), data={'file': file})
-
+    #    self.assertEqual(response.status_code, 201)
 
         
-    #    self.assertEqual(response.status_code, 201)
 
         
        
