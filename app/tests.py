@@ -60,23 +60,24 @@ class TestUserFile(TestCase):
         # self.assertRedirects(response, 'app', status_code=200)
         # self.assertRedirects(response, 'app/file/upload/', status_code=200)
 
-        py_file = open('test_files/test_upload_file.py', 'rb')
-        response = self.client.post(reverse('file-upload'), file={'file': py_file}, follow=True)
-        print(response.request['PATH_INFO'], ' <<<<<<')
-        self.assertRedirects(response, reverse('file-upload'), status_code=200, fetch_redirect_response=False)
+        # py_file = open('test_files/test_upload_file.py', 'rb')
+        # response = self.client.post(reverse('file-upload'), file={'file': py_file}, follow=True)
+        # print(response.request['PATH_INFO'], ' <<<<<<')
+        # self.assertRedirects(response, reverse('file-upload'), status_code=200, fetch_redirect_response=False)
+
         # self.assertEqual(response.status_code, 200)
+        pass
 
 
-    # def test_upload_file(self):
+    def test_upload_file(self):
 
-    #    filename_py = 'test_files/test_upload_file.py' 
-    #    filename_txt = 'test_files/test_upload_file.txt' 
-    #    data = {'file': filename_py}
-    #    response = self.client.post(reverse('file-upload'), data=data)
-    #    response = self.client.post(reverse('file-upload'), data=data)
-    #    file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/x-py')
-    #    response = self.client.post(reverse('file-upload'), data={'file': file})
-    #    self.assertEqual(response.status_code, 201)
+       filename_py = 'test_files/test_upload_file.py' 
+       filename_txt = 'test_files/test_upload_file.txt' 
+       data = {'file': filename_py}
+       file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/x-py')
+       response = self.client.post(reverse('file-upload'), data=data)
+       self.assertRedirects(response, reverse('file-upload'), status_code=200)
+       self.assertEqual(response.status_code, 201)
 
         
 
