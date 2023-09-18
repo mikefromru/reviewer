@@ -45,13 +45,11 @@ class TestUserFile(TestCase):
         filename_py = open('test_files/test_upload_file.py', 'rb')
         upload_file = {'file': SimpleUploadedFile(filename_py.name, filename_py.read())}
         form = UploadFileForm(files=upload_file)
-        print(form.errors)
+        # print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_upload_not_allowed_file(self):
         filename_py = open('test_files/test_upload_file.txt', 'rb')
         upload_file = {'file': SimpleUploadedFile(filename_py.name, filename_py.read())}
         form = UploadFileForm(files=upload_file)
-        print(form.errors)
         self.assertFalse(form.is_valid())
-
