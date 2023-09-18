@@ -12,13 +12,6 @@ from django.core.validators import FileExtensionValidator
 import os
 
 
-def validator_file(file):
-    # if Path(file).suffix != '.py':
-    if os.path.splitext(file)[1] != '.py':
-        raise ValidationError(
-            'Exestion of a file should be with < .py >'
-        )
-
 class CustomUser(AbstractUser):
 
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
