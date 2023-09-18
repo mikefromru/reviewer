@@ -28,6 +28,9 @@ def edit_file(request, pk):
         with open('media/'+ str(request.user) + '/'  + str(queryset), 'w') as f:
             update_file = request.POST['new']
             f.write(update_file)
+            queryset.changed = True # mark the file as changed
+            queryset.save()
+            print(queryset.new, ' <<< new <<<<')
 
         return redirect('file-list')
         # return HttpResponse(file, content_type='text/plain')

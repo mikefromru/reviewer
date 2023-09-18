@@ -47,6 +47,7 @@ class UserFile(models.Model):
     created = models.DateTimeField(auto_now_add=True, blank=True)
     modified = models.DateTimeField(auto_now=True, blank=True)
     changed = models.BooleanField(default=False)
+    new = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return str(self.file).split('/')[-1]
