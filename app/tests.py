@@ -41,91 +41,17 @@ class TestUserFile(TestCase):
         response = self.client.get(reverse('file-list'))
         self.assertEquals(response.status_code, 200)
 
-
-
-
-
-    # def test_form_upload_file(self):
-    #     form = UploadFileForm(data={
-    #         'file': 
-
-    #     })
-    
-    def test_upload_file(self):
-        # filename_py = 'test_files/test_upload_file.py' 
-        # file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/plain')
-        # payload = {'file': file}
-        # response = self.client.post(reverse('file-upload'), data=payload, format='multipart', follow=True)
-        # print(response.request['PATH_INFO'], ' <<<<<<')
-        # self.assertEqual(response.status_code, 200)
-        # print(response.request['PATH_INFO'], ' <<<<<<')
-
-        # self.assertRedirects(response, 'app', status_code=200)
-        # self.assertRedirects(response, 'app/file/upload/', status_code=200)
-
-        # py_file = open('test_files/test_upload_file.py', 'rb')
-        # response = self.client.post(reverse('file-upload'), file={'file': py_file}, follow=True)
-        # print(response.request['PATH_INFO'], ' <<<<<<')
-        # self.assertRedirects(response, reverse('file-upload'), status_code=200, fetch_redirect_response=False)
-
-        # self.assertEqual(response.status_code, 200)
-        pass
-
-
-    def test_upload_file(self):
-        filename_py = open('test_files/test_upload_file.txt', 'rb')
-        file_dict = {'file': SimpleUploadedFile(filename_py.name, filename_py.read())}
-
-        # files = {'file': open(filename_py, 'rb')}
-        # with open(filename_py, 'rb') as file:
-            # data = {'file': file.read()}
-
-        # files = SimpleUploadedFile(filename_py, b'file_content', content_type='text/plain')
-        # payload = {'file': file}
-        # response = self.client.post(reverse('file-upload'), {'file': files})
-        # print(files, ' <<<<<')
-        form = UploadFileForm(files=file_dict)
+    def test_upload_allowed_file(self):
+        filename_py = open('test_files/test_upload_file.py', 'rb')
+        upload_file = {'file': SimpleUploadedFile(filename_py.name, filename_py.read())}
+        form = UploadFileForm(files=upload_file)
         print(form.errors)
-        # self.assertFormError(response, 'form', 'This field is required')
         self.assertTrue(form.is_valid())
 
-        # self.assertEquals(form.errors['recipient'], [u"This field is required"])
+    def test_upload_not_allowed_file(self):
+        filename_py = open('test_files/test_upload_file.txt', 'rb')
+        upload_file = {'file': SimpleUploadedFile(filename_py.name, filename_py.read())}
+        form = UploadFileForm(files=upload_file)
+        print(form.errors)
+        self.assertFalse(form.is_valid())
 
-
-        '''
-        filename_py = 'test_files/test_upload_file.txt' 
-        file_mock = mock.MagicMock(spec=File)
-        file_mock.name = filename_py
-        file_model = UserFile(file=file_mock)
-        print(file_model.file.name, file_mock.name, ' <<<<<')
-        self.assertEqual(file_model.file.name, file_mock.name)
-        '''
-
-
-        # filename_txt = 'test_files/test_upload_file.txt' 
-        # with open(filename_py, 'rb') as file:
-        #     file = file.read()
-
-        # up = UserFile(file=file)
-        # self.assertFalse(up)
-
-
-
-        '''
-            response = self.client.post(reverse('file-upload'), {'file': file})
-            self.assertEqual(response.status_code, 200)
-        # with open(file)
-        '''
-
-
-
-
-
-    #    data = {'file': filename_py}
-    #    file = SimpleUploadedFile(filename_py, b'file_content', content_type='text/x-py')
-    #    response = self.client.post(reverse('file-upload'), data=data, follow=True)
-    #    self.assertRedirects(response, '/app/file/upload/', status_code=200)
-    #    self.assertRedirects(response, expected_url=reverse('file-list'), status_code=302, target_status_code=200)
-
-    #    self.assertRedirects(response, reverse('file-list'), status_code=200)
-    #    self.assertEqual(response.status_code, 200)
