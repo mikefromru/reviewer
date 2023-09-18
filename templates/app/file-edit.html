@@ -1,28 +1,30 @@
 {% extends 'app/base-app.html' %}
 {% block content %}
-{% load static %}
-
 
 <div class="container">
 <h1>Edit this file</h1>
     <form class="form-floating" method="POST" action="{% url 'file-edit' pk %}">
         {% csrf_token %}
-            <textarea class="form-control" style="height: 500px; width: 500px" name="new" id="" cols="30" rows="10">
+            <textarea class="CodeMirror" name="new" id="myCodeMirror" cols="0" rows="10">
 {{ file_content }}
             </textarea>
         <button class="btn btn-primary" type="submit">send</button>
     </form>
 </div>
 
-
-<pre>
-    <code class="python">
-        import os
-        var = 'hellow world'
-        print(var)
-        def foo(a):
-            return a + a
-    </code>
-</pre>
+<script>
+var editor = CodeMirror.fromTextArea(document.getElementById("myCodeMirror"), {
+    mode: "python",
+    lineNumbers: true,
+    matchBrackets: true,
+    indentUnit: 2, // Длина отступа в пробелах.
+    indentWithTabs: true,
+    enterMode: "keep",
+    tabMode: "shift"
+  });
+CodeMirror.setSize(null, 500)
+console.log('fuck you bitch!!!')
+</script>
 
 {% endblock %}
+            <!-- <textarea class="form-control" style="height: 500px; width: 500px" name="new" id="myCodeMirror" cols="0" rows="10"> -->

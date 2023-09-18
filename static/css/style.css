@@ -1,3 +1,9 @@
 .fuck {
     font-style: italic;
 }
+.CodeMirror {
+    /* border: 1px solid #eee; */
+    /* height: auto; */
+    resize: vertical;
+    overflow: auto !important;
+}
