@@ -1,14 +1,20 @@
-<h1>Hello File detail</h1>
-<p>{{ object.file }}</p>
-<p>{{ object.created }}</p>
-<p>{{ object.modified }}</p>
-<p>{{ object.changed }}</p>
+{% extends 'app/base-app.html' %}
+{% block content %}
 
-<a href="{% url 'file-edit' object.pk %}">Edit</a>
-<br />
-<br />
+<div class="container">
+    <h1 class="fuck">File detail</h1>
+    <p>Name: <spam class='text-secondary'>{{ object.file }}</spam></p></spam>
+    <p>Created: <spam class='text-secondary'>{{ object.created }}</p></spam>
+    <p>Modified: <spam class='text-secondary'>{{ object.modified }}</p></spam>
+    <p>Changed: <spam class='text-secondary'>{{ object.changed }}</p></spam>
 
-<form method="POST" action="{% url 'file-delete' object.pk %}">
-    {% csrf_token %}
-    <button type="submit">DELETE</button>
-</form>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" role="button" href="{% url 'file-edit' object.pk %}">Edit</a>
+        <form method="POST" action="{% url 'file-delete' object.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">DELETE</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
